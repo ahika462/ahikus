@@ -16,7 +16,7 @@ class Main extends FlxGame {
 	/**
 	 * Game initial state (leave null to `flixel.FlxState`)
 	 */
-	var initialState:Class<FlxState> = game.play.PlayState;
+	var initialState:Class<FlxState> = game.play.Menu;
 	/**
 	 * Game framerate (leave 0 to fit to display refresh rate)
 	 */
