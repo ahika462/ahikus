@@ -21,7 +21,9 @@
 	
 	<assets path="Assets" rename="assets"/>
 
-	<haxelib name="flixel"/>
+	<haxelib name="lime"/> <!-- native backend -->
+	<haxelib name="openfl"/> <!-- engine backend -->
+	<haxelib name="flixel"/> <!-- engine -->
 	<haxelib name="flixel-addons"/>
 
 </project>

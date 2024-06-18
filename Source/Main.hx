@@ -1,5 +1,5 @@
+import openfl.display.FPS;
 import game.system.CrashHandler;
-import openfl.Lib;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxGame;
@@ -36,7 +36,12 @@ class Main extends FlxGame {
 		CrashHandler.init();
 
 		instance = new Main();
-		Lib.current.addChild(instance);
+		FlxG.stage.addChild(instance);
+
+		var fps = new FPS(10, 3, 0xFFFFFFFF);
+		fps.border = true;
+		fps.borderColor = 0xFF000000;
+		FlxG.stage.addChild(fps);
 	}
 
 	public function new() {

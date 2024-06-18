@@ -96,6 +96,12 @@ class PlayState extends State {
 				if (FlxG.overlap(sexy, bullet)) {
 					sexy.kill();
 					bullet.kill();
+
+					var emitter = new FlxEmitter(sexy.getMidpoint().x, sexy.getMidpoint().y);
+					emitter.start(false, 0.01);
+					emitter.acceleration.set(-100, 200, 100, 400, -200, 300, 200, 500);
+					emitter.makeParticles(2, 2, 0xFFFF0000);
+					add(emitter);
 				}
 			}
 		});
