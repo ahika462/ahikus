@@ -10,6 +10,7 @@ enum Control {
 	DOWN;
 	LEFT;
 	RIGHT;
+	RELOAD;
 }
 
 class Controls {
@@ -17,7 +18,8 @@ class Controls {
 		UP    => [W],
 		DOWN  => [S],
 		LEFT  => [A],
-		RIGHT => [D]
+		RIGHT => [D],
+		RELOAD => [E]
 	];
 
 	public var gamepadBindings:Map<Control, Array<FlxGamepadInputID>> = [

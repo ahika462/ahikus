@@ -3,7 +3,7 @@
 	
 	<meta title="flxGameTemplate" package="com.ahika462.flxGameTemplate" version="1.0.0" company="ahika462"/>
 	<app main="Main" path="Export" file="flxGameTemplate"/>
-	<window width="1280" height="720" background="#000000" hardware="true"/>
+	<window width="960" height="680" background="#FFFFFF" hardware="true"/>
 	
 	<source path="Source"/>
 
