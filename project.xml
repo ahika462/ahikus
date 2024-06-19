@@ -28,4 +28,7 @@
 
 	<haxelib name="castle"/>
 
+	<haxelib name="haxeui-core"/>
+	<haxelib name="haxeui-flixel"/>
+
 </project>

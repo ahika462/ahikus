@@ -28,12 +28,12 @@ class Paths {
 		return searchWithExtensions('assets/images/$key', IMAGE_EXTENSIONS);
 	}
 
-	public static function music(key:String):String {
-		return searchWithExtensions('assets/music/$key', AUDIO_EXTENSIONS);
+	public static function sparrow(key:String):String {
+		return 'assets/images/$key.xml';
 	}
 
-	public static function shader(key:String):String {
-		return 'assets/shaders/$key.frag';
+	public static function music(key:String):String {
+		return searchWithExtensions('assets/music/$key', AUDIO_EXTENSIONS);
 	}
 
 	public static function sound(key:String):String {

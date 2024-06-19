@@ -1,0 +1,9 @@
+{
+	"animations": {
+		"run": {
+			"symbol": "",
+			"framerate": 12,
+			"looped": true
+		}
+	}
+}

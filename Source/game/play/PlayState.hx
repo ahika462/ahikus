@@ -42,6 +42,8 @@ class PlayState extends State {
 		bg.screenCenter();
 		add(bg);
 
+		FlxG.sound.playMusic(Paths.music('gun_battle'));
+
 		playerGroup = new FlxSpriteGroup();
 		add(playerGroup);
 
@@ -69,8 +71,6 @@ class PlayState extends State {
 		bulletsindicator = new FlxText(0, 650, 0, "BULLETS: "+ bullets, 12);
 		bulletsindicator.setFormat(32, FlxColor.BLACK, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(bulletsindicator);
-
-		super.create();
 	}
 
 	override function update(elapsed:Float) {
@@ -149,8 +149,6 @@ class PlayState extends State {
 	}
 
 	function lose() {
-		var duration = 1;
-		FlxTween.tween(FlxG, {tileScale: 0.5}, duration);
-		FlxTween.tween(FlxG.sound.music, {pitch: 0.5}, duration);
+		openSubState(new LoserState(playerGroup));
 	}
 }

@@ -1,0 +1,14 @@
+{
+	"animations": {
+		"idle": {
+			"symbol": "",
+			"framerate": 12,
+			"looped": true
+		},
+		"run": {
+			"symbol": "",
+			"framerate": 12,
+			"looped": true
+		}
+	}
+}

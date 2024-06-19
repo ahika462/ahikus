@@ -1,7 +1,7 @@
 {
 	"sheets": [
 		{
-			"name": "sexbmobs",
+			"name": "sexbombs",
 			"columns": [
 				{
 					"typeStr": "0",
@@ -21,12 +21,12 @@
 			"lines": [
 				{
 					"id": "zibidi",
-					"name": "Zibidi Replacer",
+					"name": "Zibidi",
 					"description": ""
 				},
 				{
 					"id": "witch",
-					"name": "Horny Woman",
+					"name": "Соня К",
 					"description": ""
 				},
 				{
@@ -40,8 +40,8 @@
 					"description": ""
 				},
 				{
-					"id": "garn47",
-					"name": "Garn47",
+					"id": "hopka",
+					"name": "HopKa",
 					"description": ""
 				}
 			],

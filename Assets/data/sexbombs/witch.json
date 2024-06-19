@@ -1,0 +1,14 @@
+{
+	"animations": {
+		"cry": {
+			"symbol": "",
+			"framerate": 12,
+			"looped": true
+		},
+		"run": {
+			"symbol": "",
+			"framerate": 12,
+			"looped": true
+		}
+	}
+}

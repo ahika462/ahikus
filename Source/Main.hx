@@ -1,5 +1,9 @@
+import haxe.ui.Toolkit;
+import game.system.Paths;
+import openfl.Assets;
+import game.system.Data;
 import flixel.system.FlxAssets;
-import openfl.display.FPS;
+import game.ui.FPSCounter;
 import game.system.CrashHandler;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -21,7 +25,7 @@ class Main extends FlxGame {
 	/**
 	 * Game framerate (leave 0 to fit to display refresh rate)
 	 */
-	var framerate:UInt = 60;
+	var framerate:UInt = 0;
 	/**
 	 * Whether the HaxeFlixel intro should be skipped
 	 */
@@ -39,16 +43,22 @@ class Main extends FlxGame {
 		instance = new Main();
 		FlxG.stage.addChild(instance);
 
-		var fps = new FPS(10, 3, 0xFFFFFFFF);
-		fps.border = true;
-		fps.borderColor = 0xFF000000;
+		var fps = new FPSCounter(0, 0, 0xFFFFFFFF);
 		FlxG.stage.addChild(fps);
 	}
 
 	public function new() {
 		FlxAssets.FONT_DEFAULT = 'assets/fonts/SillyGames.ttf';
 
-		var framerate = this.framerate > 0 ? this.framerate : FlxG.stage.window.displayMode.refreshRate;
+		#if js
+		Data.load(null);
+		#else
+		Data.load(Assets.getText(Paths.data('data.cdb')));
+		#end
+
+		Toolkit.init();
+
+		var framerate = this.framerate > 0 ? this.framerate : #if desktop FlxG.stage.window.displayMode.refreshRate #else 60 #end;
 
 		super(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
 	}

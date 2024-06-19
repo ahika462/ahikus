@@ -1,0 +1,31 @@
+<vbox horizontalAlign="center">
+	<label  text="Aorval Pnal Studio" style="font-size: 32px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="Programmers"        style="font-size: 24px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="ahika462"           style="font-size: 16px"/>
+	<label  text="lilwy"              style="font-size: 16px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="Artists"            style="font-size: 24px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="kate wtf"           style="font-size: 16px"/>
+	<label  text="nep"                style="font-size: 16px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="Composers"          style="font-size: 24px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="lilwy"              style="font-size: 16px"/>
+	<label  text="ahika462"           style="font-size: 16px"/>
+	<label  text="yugiguyi"           style="font-size: 16px"/>
+</vbox>
