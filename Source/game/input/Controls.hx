@@ -11,15 +11,17 @@ enum Control {
 	LEFT;
 	RIGHT;
 	RELOAD;
+	LOSE;
 }
 
 class Controls {
 	public var keyboardBindings:Map<Control, Array<FlxKey>> = [
-		UP    => [W],
-		DOWN  => [S],
-		LEFT  => [A],
-		RIGHT => [D],
-		RELOAD => [E]
+		UP     => [W],
+		DOWN   => [S],
+		LEFT   => [A],
+		RIGHT  => [D],
+		RELOAD => [E],
+		LOSE   => [Q]
 	];
 
 	public var gamepadBindings:Map<Control, Array<FlxGamepadInputID>> = [

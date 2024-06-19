@@ -1,10 +1,11 @@
 package game.play;
 
+import game.system.Paths;
 import flixel.addons.weapon.FlxBullet;
 
 class Bullet extends FlxBullet {
 	public function new() {
 		super();
-		makeGraphic(10, 10);
+		loadGraphic(Paths.image('bullet'));
 	}
 }

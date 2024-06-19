@@ -1,0 +1,54 @@
+{
+	"sheets": [
+		{
+			"name": "sexbmobs",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "id"
+				},
+				{
+					"typeStr": "1",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "description",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"id": "zibidi",
+					"name": "Zibidi Replacer",
+					"description": ""
+				},
+				{
+					"id": "witch",
+					"name": "Horny Woman",
+					"description": ""
+				},
+				{
+					"id": "rofos",
+					"name": "Rofos",
+					"description": ""
+				},
+				{
+					"id": "lolartist",
+					"name": "Lolartist",
+					"description": ""
+				},
+				{
+					"id": "garn47",
+					"name": "Garn47",
+					"description": ""
+				}
+			],
+			"separators": [],
+			"props": {}
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

@@ -23,7 +23,7 @@ class CrashHandler {
 		var stack = CallStack.exceptionStack(true);
 		var stackString = CallStack.toString(stack);
 
-		var message = '$v\n\n$stackString';
+		var message = '$v\n$stackString';
 
 		logError(message);
 		FlxG.stage.window.alert(message, 'Uncaught error');
@@ -33,7 +33,7 @@ class CrashHandler {
 		var stack = CallStack.exceptionStack(true);
 		var stackString = CallStack.toString(stack);
 
-		var message = '$v\n\n$stackString';
+		var message = '$v\n$stackString';
 
 		logError(message);
 		FlxG.stage.window.alert(message, 'Uncaught error');
@@ -43,7 +43,7 @@ class CrashHandler {
 		var stack = CallStack.exceptionStack(true);
 		var stackString = CallStack.toString(stack);
 
-		var message = '$v\n\n$stackString';
+		var message = '$v\n$stackString';
 
 		logError(message);
 		FlxG.stage.window.alert(message, 'Uncaught error');
@@ -59,9 +59,9 @@ class CrashHandler {
 		report += '\n\n$message';
 
 		report += '\n\nUsed libraries';
-		report += '\n\n${[
-			for (haxelib in usedLibraries) '- $haxelib'
-		].join('\n\n')}';
+		report += '\n${[
+			for (haxelib in usedLibraries) '  $haxelib'
+		].join('\n')}';
 
 		report += '\n\nReported by';
 		#if hl

@@ -1,5 +1,6 @@
 package game.play;
 
+import flixel.tweens.FlxTween;
 import flixel.FlxCamera;
 import flixel.addons.display.FlxBackdrop;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -40,12 +41,13 @@ class PlayState extends State {
 		bg = new FlxBackdrop(Paths.image('bg'));
 		bg.screenCenter();
 		add(bg);
+
 		playerGroup = new FlxSpriteGroup();
 		add(playerGroup);
+
 		player = new FlxSprite(Paths.image('cat'));
 
 		gun = new FlxSprite(Paths.image('gun'));
-		gun.origin.subtract(15);
 
 		playerGroup.add(player);
 		playerGroup.screenCenter();
@@ -58,18 +60,17 @@ class PlayState extends State {
 				FlxPoint.get(player.width * 0.5, player.height * 0.5))),
 			FlxWeaponSpeedMode.SPEED(new FlxBounds<Float>(500, 500)));
 		weapon.rotateBulletTowardsTarget = true;
-			sexies = new FlxTypedGroup();
-			add(sexies);
-	
-			var sexy = new Sexy(playerGroup);
-			sexies.add(sexy);
-			bulletsindicator = new FlxText(0, 650, 0, "BULLETS: "+ bullets, 12);
-			bulletsindicator.setFormat("VCR OSD Mono", 32, FlxColor.BLACK, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-			add(bulletsindicator);
-			
 
+		sexies = new FlxTypedGroup();
+		add(sexies);
 
-			super.create();
+		var sexy = new Sexy(playerGroup);
+		sexies.add(sexy);
+		bulletsindicator = new FlxText(0, 650, 0, "BULLETS: "+ bullets, 12);
+		bulletsindicator.setFormat(32, FlxColor.BLACK, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(bulletsindicator);
+
+		super.create();
 	}
 
 	override function update(elapsed:Float) {
@@ -98,6 +99,15 @@ class PlayState extends State {
 		gun.angle = FlxAngle.degreesBetweenMouse(gun);
 
 		gun.flipY = !FlxMath.inBounds(gun.angle, -90, 90);
+		gun.origin.set(47, 87);
+		if (gun.flipX != player.flipX) {
+			gun.offset.set(-0.5 * (gun.width - gun.frameWidth), -0.5 * (gun.height - gun.frameHeight));
+			if (!player.flipX) gun.offset.add(32);
+			// else gun.offset.subtract(32);
+		}
+		if (player.flipX) {
+			gun.offset.set();
+		}
 
 		if (FlxG.mouse.justPressed && bullets > 0) {
 			bullets --;
@@ -110,6 +120,9 @@ class PlayState extends State {
 			trace('anus work');
 			bullets = 10;
 		}
+
+		if (controls.justPressed.LOSE) lose();
+
 		super.update(elapsed);
 
 		weapon.group.forEachAlive((bullet) -> bullet.update(elapsed));
@@ -135,4 +148,9 @@ class PlayState extends State {
 		weapon.group.forEachAlive((bullet) -> bullet.draw());
 	}
 
+	function lose() {
+		var duration = 1;
+		FlxTween.tween(FlxG, {tileScale: 0.5}, duration);
+		FlxTween.tween(FlxG.sound.music, {pitch: 0.5}, duration);
+	}
 }

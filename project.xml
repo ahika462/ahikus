@@ -26,4 +26,6 @@
 	<haxelib name="flixel"/> <!-- engine -->
 	<haxelib name="flixel-addons"/>
 
+	<haxelib name="castle"/>
+
 </project>

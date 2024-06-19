@@ -1,3 +1,4 @@
+import flixel.system.FlxAssets;
 import openfl.display.FPS;
 import game.system.CrashHandler;
 import flixel.FlxG;
@@ -16,7 +17,7 @@ class Main extends FlxGame {
 	/**
 	 * Game initial state (leave null to `flixel.FlxState`)
 	 */
-	var initialState:Class<FlxState> = game.play.Menu;
+	var initialState:Class<FlxState> = game.ui.Menu;
 	/**
 	 * Game framerate (leave 0 to fit to display refresh rate)
 	 */
@@ -45,6 +46,8 @@ class Main extends FlxGame {
 	}
 
 	public function new() {
+		FlxAssets.FONT_DEFAULT = 'assets/fonts/SillyGames.ttf';
+
 		var framerate = this.framerate > 0 ? this.framerate : FlxG.stage.window.displayMode.refreshRate;
 
 		super(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);

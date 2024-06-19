@@ -32,6 +32,10 @@ class Paths {
 		return searchWithExtensions('assets/music/$key', AUDIO_EXTENSIONS);
 	}
 
+	public static function shader(key:String):String {
+		return 'assets/shaders/$key.frag';
+	}
+
 	public static function sound(key:String):String {
 		return searchWithExtensions('assets/sounds/$key', AUDIO_EXTENSIONS);
 	}
