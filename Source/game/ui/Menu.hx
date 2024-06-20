@@ -101,7 +101,7 @@ class Menu extends State {
 		if (controls.justPressed.ACCEPT || FlxG.mouse.justPressed) {
 			switch(buttons[curSelection]) {
 				case 'play': FlxG.switchState(game.play.PlayState.new);
-				case 'options': FlxG.switchState(game.ui.Options.new);
+				case 'options': FlxG.switchState(game.ui.options.Options.new);
 				case 'about us': FlxG.switchState(game.ui.AboutUs.new);
 			}
 		}

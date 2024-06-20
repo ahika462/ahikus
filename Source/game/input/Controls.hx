@@ -17,42 +17,30 @@ enum Control {
 }
 
 class Controls {
-	public var keyboardBindings:Map<Control, Array<FlxKey>> = [
-		UP     => [W],
-		DOWN   => [S],
-		LEFT   => [A],
-		RIGHT  => [D],
-		RELOAD => [E],
-		LOSE   => [Q],
-		ACCEPT => [SPACE, ENTER, Z],
-		BACK   => [ESCAPE, X, BACKSPACE]
-	];
-
-	public var gamepadBindings:Map<Control, Array<FlxGamepadInputID>> = [
-		UP    => [DPAD_UP],
-		DOWN  => [DPAD_DOWN],
-		LEFT  => [DPAD_LEFT],
-		RIGHT => [DPAD_RIGHT]
-	];
+	public var keyboardBindings(get, never):Map<Control, FlxKey>;
+	inline function get_keyboardBindings() return Preferences.keyboardBindings;
 
 	public var keyboard:FlxKeyboard;
-	public var gamepad:FlxGamepad;
 
 	public var justPressed:ControlsInput;
 	public var pressed:ControlsInput;
 	public var justReleased:ControlsInput;
 
-	public function new(?keyboard:FlxKeyboard, ?gamepad:FlxGamepad) {
+	public function new(?keyboard:FlxKeyboard) {
 		this.keyboard = keyboard;
-		this.gamepad = gamepad;
 		
 		justPressed = new ControlsInput(this);
-		justPressed.check = (control:Control) -> keyboard.anyJustPressed(keyboardBindings.get(control) ?? []) || gamepad.anyJustPressed(gamepadBindings.get(control) ?? []);
+		justPressed.check = (control:Control) -> keyboard.anyJustPressed(getKeyboardBinding(control));
 
 		pressed = new ControlsInput(this);
-		pressed.check = (control:Control) -> keyboard.anyPressed(keyboardBindings.get(control) ?? []) || gamepad.anyPressed(gamepadBindings.get(control) ?? []);
+		pressed.check = (control:Control) -> keyboard.anyPressed(getKeyboardBinding(control));
 
 		justReleased = new ControlsInput(this);
-		justReleased.check = (control:Control) -> keyboard.anyJustReleased(keyboardBindings.get(control) ?? []) || gamepad.anyJustReleased(gamepadBindings.get(control) ?? []);
+		justReleased.check = (control:Control) -> keyboard.anyJustReleased(getKeyboardBinding(control));
+	}
+
+	function getKeyboardBinding(control:Control):Array<FlxKey> {
+		if (keyboardBindings.exists(control)) return [keyboardBindings[control]];
+		else return [];
 	}
 }
