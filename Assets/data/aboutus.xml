@@ -28,4 +28,15 @@
 	<label  text="lilwy"              style="font-size: 16px"/>
 	<label  text="ahika462"           style="font-size: 16px"/>
 	<label  text="yugiguyi"           style="font-size: 16px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="Inspired by"        style="font-size: 24px"/>
+
+	<spacer height="10px"/>
+
+	<label  text="Obama"               style="font-size: 16px"/>
+	<label  text="Africa"              style="font-size: 16px"/>
+	<label  text="Trump"               style="font-size: 16px"/>
+	<label  text="Napoleon"            style="font-size: 16px"/>
 </vbox>

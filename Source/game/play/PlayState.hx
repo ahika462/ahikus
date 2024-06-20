@@ -1,5 +1,6 @@
 package game.play;
 
+import flixel.FlxObject;
 import flixel.tweens.FlxTween;
 import flixel.FlxCamera;
 import flixel.addons.display.FlxBackdrop;
@@ -22,14 +23,21 @@ import flixel.text.FlxText;
 import flixel.FlxG;
 
 class PlayState extends State {
+	var gameCamera:FlxCamera;
+	var hudCamera:FlxCamera;
+
 	var bg:FlxBackdrop;
 	var playerGroup:FlxSpriteGroup;
 	var player:FlxSprite;
-	var gun:FlxSprite;
-	var weapon:FlxTypedWeapon<Bullet>;
+	var gun:Gun;
+
+	var bulletsGroup:FlxTypedGroup<FlxSprite>;
 	var bullets(default, set):Int = 10;
 	var bulletsindicator:FlxText;
+
 	var cam:FlxCamera;
+
+	var playerPoint:FlxObject;
 
 	var sexies:FlxTypedGroup<Sexy>;
 
@@ -38,6 +46,13 @@ class PlayState extends State {
 		return bullets = v;
 	}
 	override function create() {
+		gameCamera = new FlxCamera();
+		FlxG.cameras.reset(gameCamera);
+
+		hudCamera = new FlxCamera();
+		hudCamera.bgColor = 0x00000000;
+		FlxG.cameras.add(hudCamera, false);
+
 		bg = new FlxBackdrop(Paths.image('bg'));
 		bg.screenCenter();
 		add(bg);
@@ -49,19 +64,18 @@ class PlayState extends State {
 
 		player = new FlxSprite(Paths.image('cat'));
 
-		gun = new FlxSprite(Paths.image('gun'));
+		bulletsGroup = new FlxTypedGroup();
+		add(bulletsGroup);
+
+		gun = new Gun(bulletsGroup, Paths.image('gun'));
+		gun.origin.set(47, 87);
 
 		playerGroup.add(player);
 		playerGroup.screenCenter();
 
 		playerGroup.add(gun);
-
-		weapon = new FlxTypedWeapon('gun', (_) -> new Bullet(),
-			FlxWeaponFireFrom.PARENT(player, new FlxBounds<FlxPoint>(
-				FlxPoint.get(player.width * 0.5, player.height * 0.5),
-				FlxPoint.get(player.width * 0.5, player.height * 0.5))),
-			FlxWeaponSpeedMode.SPEED(new FlxBounds<Float>(500, 500)));
-		weapon.rotateBulletTowardsTarget = true;
+	
+		playerPoint = new FlxObject();
 
 		sexies = new FlxTypedGroup();
 		add(sexies);
@@ -70,49 +84,48 @@ class PlayState extends State {
 		sexies.add(sexy);
 		bulletsindicator = new FlxText(0, 650, 0, "BULLETS: "+ bullets, 12);
 		bulletsindicator.setFormat(32, FlxColor.BLACK, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		bulletsindicator.cameras = [hudCamera];
 		add(bulletsindicator);
+
+		FlxG.camera.follow(playerPoint);
 	}
 
 	override function update(elapsed:Float) {
-
-		var sourcePoint = player.getPosition().add(player.origin.x / 2, player.origin.y / 2);
-		var destinationPoint = sourcePoint.copyTo();
-
-		var speed = 500;
-		if (controls.pressed.UP) destinationPoint.y -= speed;
-		if (controls.pressed.DOWN) destinationPoint.y += speed;
+		var speed = 500.0;
 		
-		if (controls.pressed.LEFT) destinationPoint.x -= speed;
-		if (controls.pressed.RIGHT) destinationPoint.x += speed;
+		var movePoint = FlxPoint.get();
 
-		if (sourcePoint.distanceTo(destinationPoint) > 0)
-			FlxVelocity.moveTowardsPoint(playerGroup, destinationPoint, speed);
-		else
-			playerGroup.velocity.set();
+		if (controls.pressed.UP) movePoint.y -= speed;
+		if (controls.pressed.DOWN) movePoint.y += speed;
+		
+		if (controls.pressed.LEFT) movePoint.x -= speed;
+		if (controls.pressed.RIGHT) movePoint.x += speed;
+
+		move(movePoint, speed);
 
 		if (playerGroup.velocity.x > 0) player.flipX = false;
 		if (playerGroup.velocity.x < 0) player.flipX = true;
 
-		/*var viewAngle = FlxAngle.degreesBetweenMouse(gun);
-		gun.angle = FlxMath.lerp(gun.angle, viewAngle, 0.16);*/
+		player.updateHitbox();
+		if (player.flipX) player.offset.x += 32;
 
-		gun.angle = FlxAngle.degreesBetweenMouse(gun);
+		playerPoint.setPosition(player.getMidpoint().x, player.getMidpoint().y);
+
+		gun.angle = FlxAngle.degreesBetweenMouse(playerPoint);
 
 		gun.flipY = !FlxMath.inBounds(gun.angle, -90, 90);
+
 		gun.origin.set(47, 87);
-		if (gun.flipX != player.flipX) {
-			gun.offset.set(-0.5 * (gun.width - gun.frameWidth), -0.5 * (gun.height - gun.frameHeight));
-			if (!player.flipX) gun.offset.add(32);
-			// else gun.offset.subtract(32);
-		}
-		if (player.flipX) {
-			gun.offset.set();
+		gun.offset.set(-0.5 * (gun.width - gun.frameWidth), -0.5 * (gun.height - gun.frameHeight) - 6);
+		if (gun.flipY) {
+			gun.origin.y = gun.height - gun.origin.y;
+			gun.offset.set(gun.offset.x - 24, gun.offset.y - 14);
 		}
 
 		if (FlxG.mouse.justPressed && bullets > 0) {
 			bullets --;
 			FlxG.sound.play(Paths.sound('cumshot'));
-			trace(weapon.fireAtMouse());
+			gun.fire();
 		}
 
 		if (controls.justPressed.RELOAD){
@@ -125,10 +138,8 @@ class PlayState extends State {
 
 		super.update(elapsed);
 
-		weapon.group.forEachAlive((bullet) -> bullet.update(elapsed));
-
 		sexies.forEachAlive((sexy) -> {
-			for (bullet in weapon.group) {
+			for (bullet in bulletsGroup.members) {
 				if (FlxG.overlap(sexy, bullet)) {
 					sexy.kill();
 					bullet.kill();
@@ -143,12 +154,13 @@ class PlayState extends State {
 		});
 	}
 
-	override function draw() {
-		super.draw();
-		weapon.group.forEachAlive((bullet) -> bullet.draw());
-	}
-
 	function lose() {
 		openSubState(new LoserState(playerGroup));
+	}
+
+	function move(target:FlxPoint, speed:Float) {
+		var a = FlxAngle.angleBetweenPoint(playerGroup, target.addPoint(playerGroup.getPosition()));
+		playerGroup.velocity.x = FlxMath.fastCos(a) * speed;
+		playerGroup.velocity.y = FlxMath.fastSin(a) * speed;
 	}
 }

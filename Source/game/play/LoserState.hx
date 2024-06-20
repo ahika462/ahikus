@@ -29,7 +29,10 @@ class LoserState extends SubState {
 
 		FlxG.camera.follow(target);
 		FlxG.camera.zoom = 2;
+
+		FlxG.sound.music.stop();
 		FlxG.sound.play(Paths.sound('lose'));
+		
 		FlxTween.tween(FlxG.camera, {zoom: 1.5}, 0.3, {ease: FlxEase.cubeOut});
 		new FlxTimer().start(2, (tmr) -> {
 			zoomOut = true;

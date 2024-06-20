@@ -9,6 +9,8 @@ class AboutUs extends State {
 	var component:Component;
 
 	override function create() {
+		FlxG.sound.playMusic(Paths.music('credits'));
+
 		component = RuntimeComponentBuilder.fromAsset(Paths.data('aboutus.xml'));
 		if (component != null) {
 			component.setPosition(100, FlxG.height * 0.8);
@@ -17,9 +19,12 @@ class AboutUs extends State {
 	}
 
 	override function update(elapsed:Float) {
-		component.y -= 50 * elapsed;
+		if (component != null) {
+			component.y -= 50 * elapsed;
+			if (component.y < -component.height) component.y = FlxG.height;
+		}
 
-		if (!component.isOnScreen()) FlxG.switchState(game.ui.Menu.new);
+		if (controls.justPressed.BACK) FlxG.switchState(Menu.new);
 
 		super.update(elapsed);
 	}

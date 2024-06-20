@@ -43,9 +43,11 @@ class CrashHandler {
 		var stack = CallStack.exceptionStack(true);
 		var stackString = CallStack.toString(stack);
 
-		var message = '$v\n$stackString';
+		var message = '${e.error}\n$stackString';
 
+		#if sys
 		logError(message);
+		#end
 		FlxG.stage.window.alert(message, 'Uncaught error');
 	}
 	#end

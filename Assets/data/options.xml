@@ -1,0 +1,13 @@
+<vbox>
+	<hbox>
+		<switch id="antialiasing" verticalAlign="center" styleName="pill-switch"/>
+		<label text="Anti-aliasing" verticalAlign="center" style="text-size: 24px; color: #ffffff"/>
+	</hbox>
+
+	<spacer height="10px"/>
+
+	<hbox>
+		<switch id="antialiasing" verticalAlign="center" styleName="pill-switch"/>
+		<label text="Anti-aliasing" verticalAlign="center" style="text-size: 24px; color: #ffffff"/>
+	</hbox>
+</vbox>

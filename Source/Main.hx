@@ -1,3 +1,4 @@
+import haxe.ui.backend.flixel.CursorHelper;
 import haxe.ui.Toolkit;
 import game.system.Paths;
 import openfl.Assets;
@@ -21,7 +22,7 @@ class Main extends FlxGame {
 	/**
 	 * Game initial state (leave null to `flixel.FlxState`)
 	 */
-	var initialState:Class<FlxState> = game.ui.Menu;
+	var initialState:Class<FlxState> = game.ui.Intro;
 	/**
 	 * Game framerate (leave 0 to fit to display refresh rate)
 	 */
@@ -50,16 +51,32 @@ class Main extends FlxGame {
 	public function new() {
 		FlxAssets.FONT_DEFAULT = 'assets/fonts/SillyGames.ttf';
 
-		#if js
-		Data.load(null);
-		#else
 		Data.load(Assets.getText(Paths.data('data.cdb')));
-		#end
 
-		Toolkit.init();
+		initHaxeUI();
 
 		var framerate = this.framerate > 0 ? this.framerate : #if desktop FlxG.stage.window.displayMode.refreshRate #else 60 #end;
 
 		super(gameWidth, gameHeight, initialState, framerate, framerate, skipSplash, startFullscreen);
+	}
+
+	function initHaxeUI() {
+		Toolkit.init();
+
+		for (name in [
+			'default',
+			'cross',
+			'eraser',
+			'grabbing',
+			'hourglass',
+			'pointer',
+			'text',
+			'text-vertical',
+			'zoom-in',
+			'zoom-out',
+			'crosshair',
+			'cell',
+			'scroll'
+		]) CursorHelper.registerCursor(name, Paths.image('cursor'));
 	}
 }

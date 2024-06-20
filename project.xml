@@ -2,8 +2,8 @@
 <project>
 	
 	<meta title="flxGameTemplate" package="com.ahika462.flxGameTemplate" version="1.0.0" company="ahika462"/>
-	<app main="Main" path="Export" file="flxGameTemplate"/>
-	<window width="960" height="680" background="#FFFFFF" hardware="true"/>
+	<app main="Main" path="Export" file="flxGameTemplate" preloader="flixel.system.FlxBasePreloader"/>
+	<window width="960" height="680" background="#000000" hardware="true"/>
 	
 	<source path="Source"/>
 
@@ -19,7 +19,8 @@
 		<set name="BUILD_DIR" value="Export/final/64bit" if="final"/>
 	</section>
 	
-	<assets path="Assets" rename="assets"/>
+	<assets path="Assets" rename="assets" exclude="*.ogg|*.wav" if="web"/>
+	<assets path="Assets" rename="assets" exclude="*.mp3" unless="web"/>
 
 	<haxelib name="lime"/> <!-- native backend -->
 	<haxelib name="openfl"/> <!-- engine backend -->
@@ -30,5 +31,8 @@
 
 	<haxelib name="haxeui-core"/>
 	<haxelib name="haxeui-flixel"/>
+
+	<icon path="Assets/images/icons/desktop.png" if="desktop"/>
+	<icon path="Assets/images/icons/web.png" if="web"/>
 
 </project>
